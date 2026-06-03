@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AQUAVID - Tu Libertad en Botella</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Montserrat', sans-serif;
+            color: #1a1a1a;
+            background: #faf7f2;
+            line-height: 1.6;
+        }
+        :root {
+            --beige: #d4c5b3;
+            --beige-light: #f5f1ed;
+            --white: #ffffff;
+            --black: #1a1a1a;
+            --gray: #808080;
+            --gray-light: #e8e8e8;
+        }
+
+        /* HEADER */
+        header { 
+            background: var(--white);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--black);
+        }
+        .logo span {
+            color: var(--beige);
+        }
+        .nav-right {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+        .cart-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--beige);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .cart-icon:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--black);
+            color: var(--white);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* HERO */
+        .hero {
+            background: var(--white);
+            padding: 100px 40px;
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-subtitle {
+            font-size: 13px;
+            letter-spacing: 3px;
+            color: var(--beige);
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        .hero h1 { 
+            font-size: 64px;
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            color: var(--black);
+            line-height: 1.2;
+        }
+        .hero-highlight {
+            color: var(--beige);
+            font-weight: 500;
+        }
+        .hero p { 
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+        .hero-image-container {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--beige-light), var(--white));
+            border-radius: 3px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 150px;
+            margin-bottom: 60px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* BENEFITS SECTION */
+        .benefits-section {
+            padding: 100px 40px;
+            background: var(--beige-light);
+        }
+        .section-title {
+            font-size: 42px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 60px;
+            color: var(--black);
+            letter-spacing: -0.5px;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+        .benefit-card {
+            background: var(--white);
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+        .benefit-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            transform: translateY(-4px);
+        }
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        .benefit-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--black);
+            letter-spacing: 0.5px;
+        }
+        .benefit-card p {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 300;
+            line-height: 1.7;
+        }
+
+        /* USES SECTION */
+        .uses-section {
+            padding: 100px 40px;
+            background: var(--white);
+        }
+        .uses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+        }
+        .use-card {
+            background: var(--beige-light);
+            padding: 35px;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        .use-card:hover {
+            border-color: var(--beige);
+            background: var(--white);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .use-card-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+        .use-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--black);
+        }
+        .use-card p {
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* PRODUCTS SECTION */
+        .products-section {
+            padding: 100px 40px;
+            background: var(--beige-light);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        .product-card {
+            background: var(--white);
+            border-radius: 3px;
+            overflow: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+        .product-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+        }
+        .color-preview {
+            width: 100%;
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .product-info {
+            padding: 30px;
+        }
+        .product-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--black);
+            letter-spacing: 0.3px;
+        }
+        .product-info p {
+            font-size: 13px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .price {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--beige);
+            margin-bottom: 18px;
+        }
+        .add-cart-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .add-cart-btn:hover {
+            background: var(--beige);
+            color: var(--black);
+        }
+
+        /* REVIEWS */
+        .reviews-section {
+            padding: 100px 40px;
+            background: var(--white);
+        }
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+        .review-card {
+            background: var(--beige-light);
+            padding: 35px;
+            border-radius: 2px;
+            border-left: 3px solid var(--beige);
+        }
+        .review-rating {
+            color: var(--beige);
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .review-text {
+            color: var(--gray);
+            line-height: 1.8;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            font-style: italic;
+        }
+        .review-author {
+            font-weight: 600;
+            color: var(--black);
+            font-size: 14px;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: flex-end;
+            z-index: 200;
+        }
+        .modal {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px 8px 0 0;
+            padding: 35px;
+            animation: slideUp 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 26px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        .cart-items {
+            margin-bottom: 25px;
+            max-height: 300px;
+            overflow-y: auto;
+            border-top: 1px solid var(--gray-light);
+            border-bottom: 1px solid var(--gray-light);
+            padding: 15px 0;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        .cart-item-info h4 {
+            margin-bottom: 5px;
+            color: var(--black);
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .cart-item-info p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        .quantity-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--gray-light);
+            background: var(--white);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--black);
+            transition: all 0.3s;
+        }
+        .qty-btn:hover {
+            border-color: var(--beige);
+            background: var(--beige-light);
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .country-selector {
+            margin-bottom: 20px;
+        }
+        .country-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--black);
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .country-selector select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 2px;
+            font-size: 13px;
+            cursor: pointer;
+            background: var(--white);
+            color: var(--black);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .customer-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--gray-light);
+            border-radius: 2px;
+            font-size: 13px;
+            margin-bottom: 10px;
+            background: var(--white);
+            color: var(--black);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cart-summary {
+            margin: 25px 0;
+            padding: 20px 0;
+            border-top: 2px solid var(--gray-light);
+            border-bottom: 2px solid var(--gray-light);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--gray);
+        }
+        .summary-row.total {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--beige);
+            margin-bottom: 0;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .payment-option {
+            padding: 15px;
+            border: 1px solid var(--gray-light);
+            border-radius: 2px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+        .payment-option:hover {
+            border-color: var(--beige);
+            background: var(--beige-light);
+        }
+        .payment-option.selected {
+            border: 2px solid var(--beige);
+            background: var(--beige-light);
+        }
+        .payment-option h4 {
+            margin-bottom: 4px;
+            color: var(--black);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .payment-option p {
+            font-size: 11px;
+            color: var(--gray);
+        }
+
+        .checkout-btn, .contact-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 2px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .checkout-btn {
+            background: var(--black);
+            color: var(--white);
+        }
+        .checkout-btn:hover {
+            background: var(--beige);
+            color: var(--black);
+        }
+        .contact-btn {
+            background: #25D366;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .contact-btn:hover {
+            background: #1fa35f;
+        }
+
+        .payment-details {
+            background: var(--beige-light);
+            padding: 18px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .wallet-address {
+            background: var(--white);
+            padding: 10px;
+            border-radius: 2px;
+            font-family: monospace;
+            font-size: 11px;
+            word-break: break-all;
+            margin: 10px 0;
+            user-select: all;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 50px 40px;
+            text-align: center;
+        }
+        footer p {
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 300;
+        }
+        .footer-highlight {
+            color: var(--beige);
+            font-weight: 500;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .hero { padding: 60px 20px; }
+            .hero h1 { font-size: 40px; }
+            .container { padding: 0 20px; }
+            .benefits-section, .uses-section, .products-section, .reviews-section {
+                padding: 60px 20px;
+            }
+            .section-title { font-size: 32px; margin-bottom: 40px; }
+            .benefits-grid, .uses-grid, .products-grid, .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal { padding: 25px; }
+            .payment-methods { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+        const { useState } = React;
+
+        const AquavidApp = () => {
+            const [cart, setCart] = useState([]);
+            const [showCart, setShowCart] = useState(false);
+            const [selectedCountry, setSelectedCountry] = useState('españa');
+            const [selectedPayment, setSelectedPayment] = useState(null);
+            const [showPaymentDetails, setShowPaymentDetails] = useState(false);
+            const [customerInfo, setCustomerInfo] = useState({ name: '', email: '', phone: '' });
+
+            const products = [
+                { 
+                    id: 1, 
+                    name: 'AQUAVID - Beige', 
+                    color: '#d4c5b3',
+                    price: { españa: 20, venezuela: 30 },
+                    description: 'Elegancia neutral' 
+                },
+                { 
+                    id: 2, 
+                    name: 'AQUAVID - Negro', 
+                    color: '#1a1a1a',
+                    price: { españa: 20, venezuela: 30 },
+                    description: 'Minimalismo puro' 
+                },
+                { 
+                    id: 3, 
+                    name: 'AQUAVID - Blanco', 
+                    color: '#ffffff',
+                    price: { españa: 20, venezuela: 30 },
+                    description: 'Limpieza absoluta',
+                    border: true
+                }
+            ];
+
+            const benefits = [
+                { icon: '🗽', title: 'Libertad Total', desc: 'Manos libres para lo que necesites. Tu teléfono siempre seguro contigo.' },
+                { icon: '✋', title: 'Higiene Garantizada', desc: 'Tu móvil no toca el suelo. Protegido del polvo, arena y bacterias.' },
+                { icon: '📱', title: 'Siempre a Mano', desc: 'Grabación instantánea sin buscar dónde dejar el teléfono.' },
+                { icon: '❄️', title: 'Agua Perfecta', desc: 'Frío por 24 horas. Hidratación sin compromisos.' }
+            ];
+
+            const uses = [
+                { icon: '💪', title: 'Entrenamiento', desc: 'Graba tu progreso en el gym sin tripié.' },
+                { icon: '🌲', title: 'Naturaleza', desc: 'Perfecta para senderismo y aventuras.' },
+                { icon: '👨‍🍳', title: 'Cocina', desc: 'Sigue recetas mientras cocinas.' },
+                { icon: '📚', title: 'Estudio', desc: 'Graba apuntes mientras estudias.' },
+                { icon: '🏖️', title: 'Playa', desc: 'Protege tu móvil de la arena.' },
+                { icon: '🎓', title: 'Clases', desc: 'Sigue clase mientras te hidratas.' }
+            ];
+
+            const reviews = [
+                { rating: '★★★★★', text: 'Finalmente una botella que entiende mis necesidades. La uso en cada entrenamiento.', author: 'María' },
+                { rating: '★★★★★', text: 'El diseño es hermoso y la funcionalidad es increíble. Muy práctica.', author: 'Sofía' },
+                { rating: '★★★★★', text: 'La mejor inversión para documentar mi vida activa.', author: 'Laura' }
+            ];
+
+            const addToCart = (product) => {
+                const existingItem = cart.find(item => item.id === product.id && item.country === selectedCountry);
+                if (existingItem) {
+                    setCart(cart.map(item =>
+                        item.id === product.id && item.country === selectedCountry
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    ));
+                } else {
+                    setCart([...cart, { ...product, quantity: 1, country: selectedCountry }]);
+                }
+                setShowCart(true);
+            };
+
+            const removeFromCart = (id, country) => {
+                setCart(cart.filter(item => !(item.id === id && item.country === country)));
+            };
+
+            const updateQuantity = (id, country, quantity) => {
+                if (quantity <= 0) {
+                    removeFromCart(id, country);
+                } else {
+                    setCart(cart.map(item =>
+                        item.id === id && item.country === country
+                            ? { ...item, quantity }
+                            : item
+                    ));
+                }
+            };
+
+            const getTotalPrice = () => {
+                return cart.reduce((sum, item) => {
+                    const price = selectedCountry === 'españa' ? item.price.españa : item.price.venezuela;
+                    return sum + (price * item.quantity);
+                }, 0);
+            };
+
+            const currency = selectedCountry === 'españa' ? '€' : '$';
+            const paymentMethods = selectedCountry === 'españa' 
+                ? [
+                    { id: 'stripe', name: 'Tarjeta', desc: 'Stripe' },
+                    { id: 'mercadopago', name: 'Mercado Pago', desc: 'Billetera' }
+                ]
+                : [
+                    { id: 'usdt', name: 'USDT', desc: 'Cripto' },
+                    { id: 'binance', name: 'Binance', desc: 'QR Pay' },
+                    { id: 'manual', name: 'Manual', desc: 'WhatsApp' }
+                ];
+
+            const handleCheckout = () => {
+                if (!selectedPayment) {
+                    alert('Selecciona un método de pago');
+                    return;
+                }
+                if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
+                    alert('Completa tus datos');
+                    return;
+                }
+                setShowPaymentDetails(true);
+                if (selectedPayment !== 'manual') {
+                    sendWhatsAppNotification();
+                }
+            };
+
+            const sendWhatsAppNotification = () => {
+                const orderSummary = `
+🛍️ NUEVA COMPRA - AQUAVID
+━━━━━━━━━━━━━━━━━
+${cart.filter(item => item.country === selectedCountry).map(item => `• ${item.name} x${item.quantity} - ${currency}${selectedCountry === 'españa' ? item.price.españa : item.price.venezuela}`).join('\n')}
+
+💰 TOTAL: ${currency}${getTotalPrice()}
+🌍 País: ${selectedCountry === 'españa' ? 'España' : 'Venezuela'}
+💳 Pago: ${selectedPayment}
+
+👤 ${customerInfo.name}
+📧 ${customerInfo.email}
+📱 ${customerInfo.phone}
+                `;
+                
+                const phoneNumber = '34XXXXXXXXX';
+                const encodedMessage = encodeURIComponent(orderSummary);
+                const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
+            };
+
+            return (
+                <>
+                    <header>
+                        <div className="logo">AQUA<span>VID</span></div>
+                        <div className="nav-right">
+                            <div className="cart-icon" onClick={() => setShowCart(!showCart)}>
+                                🛒
+                                {cart.length > 0 && <div className="cart-count">{cart.length}</div>}
+                            </div>
+                        </div>
+                    </header>
+
+                    <section className="hero">
+                        <div className="hero-subtitle">Tu Libertad en Botella</div>
+                        <h1>Hidratación <span className="hero-highlight">sin límites</span></h1>
+                        <p>Una botella inteligente que se adapta a tu vida activa. Graba, hidrátate, disfruta.</p>
+                        <div className="hero-image-container">💧</div>
+                    </section>
+
+                    <section className="benefits-section container">
+                        <h2 className="section-title">¿Por qué AQUAVID?</h2>
+                        <div className="benefits-grid">
+                            {benefits.map((benefit, idx) => (
+                                <div key={idx} className="benefit-card">
+                                    <div className="benefit-icon">{benefit.icon}</div>
+                                    <h3>{benefit.title}</h3>
+                                    <p>{benefit.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="uses-section container">
+                        <h2 className="section-title">Úsala en Todas Partes</h2>
+                        <div className="uses-grid">
+                            {uses.map((use, idx) => (
+                                <div key={idx} className="use-card">
+                                    <div className="use-card-icon">{use.icon}</div>
+                                    <h4>{use.title}</h4>
+                                    <p>{use.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="products-section container">
+                        <h2 className="section-title">Elige tu Color</h2>
+                        <div className="products-grid">
+                            {products.map(product => (
+                                <div key={product.id} className="product-card">
+                                    <div className="color-preview" style={{ 
+                                        backgroundColor: product.color,
+                                        border: product.border ? '1px solid #ccc' : 'none'
+                                    }}>
+                                        💧
+                                    </div>
+                                    <div className="product-info">
+                                        <h3>{product.name}</h3>
+                                        <p>{product.description}</p>
+                                        <div className="price">{currency}{selectedCountry === 'españa' ? product.price.españa : product.price.venezuela}</div>
+                                        <button className="add-cart-btn" onClick={() => addToCart(product)}>
+                                            Agregar
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    <section className="reviews-section container">
+                        <h2 className="section-title">Lo que Nuestros Clientes Dicen</h2>
+                        <div className="reviews-grid">
+                            {reviews.map((review, idx) => (
+                                <div key={idx} className="review-card">
+                                    <div className="review-rating">{review.rating}</div>
+                                    <p className="review-text">"{review.text}"</p>
+                                    <div className="review-author">— {review.author}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {showCart && (
+                        <div className="modal-overlay" onClick={() => setShowCart(false)}>
+                            <div className="modal" onClick={(e) => e.stopPropagation()}>
+                                <div className="modal-header">
+                                    <span>Tu Carrito</span>
+                                    <button className="close-btn" onClick={() => setShowCart(false)}>✕</button>
+                                </div>
+
+                                {cart.length === 0 ? (
+                                    <p style={{ textAlign: 'center', color: '#999', padding: '40px 0', fontSize: '13px' }}>
+                                        Carrito vacío
+                                    </p>
+                                ) : (
+                                    <>
+                                        <div className="country-selector">
+                                            <label>País de Envío</label>
+                                            <select value={selectedCountry} onChange={(e) => setSelectedCountry(e.target.value)}>
+                                                <option value="españa">🇪🇸 España</option>
+                                                <option value="venezuela">🇻🇪 Venezuela</option>
+                                            </select>
+                                        </div>
+
+                                        {cart.filter(item => item.country === selectedCountry).length > 0 && (
+                                            <>
+                                                <div className="cart-items">
+                                                    {cart.filter(item => item.country === selectedCountry).map(item => (
+                                                        <div key={item.id} className="cart-item">
+                                                            <div className="cart-item-info">
+                                                                <h4>{item.name}</h4>
+                                                                <p>{currency}{selectedCountry === 'españa' ? item.price.españa : item.price.venezuela}</p>
+                                                            </div>
+                                                            <div className="quantity-controls">
+                                                                <button className="qty-btn" onClick={() => updateQuantity(item.id, selectedCountry, item.quantity - 1)}>−</button>
+                                                                <span style={{ width: '20px', textAlign: 'center', fontSize: '12px' }}>{item.quantity}</span>
+                                                                <button className="qty-btn" onClick={() => updateQuantity(item.id, selectedCountry, item.quantity + 1)}>+</button>
+                                                                <button className="remove-btn" onClick={() => removeFromCart(item.id, selectedCountry)}>✕</button>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                <div className="cart-summary">
+                                                    <div className="summary-row">
+                                                        <span>Subtotal</span>
+                                                        <span>{currency}{getTotalPrice()}</span>
+                                                    </div>
+                                                    <div className="summary-row">
+                                                        <span>Envío</span>
+                                                        <span>Gratis</span>
+                                                    </div>
+                                                    <div className="summary-row total">
+                                                        <span>Total</span>
+                                                        <span>{currency}{getTotalPrice()}</span>
+                                                    </div>
+                                                </div>
+
+                                                <div style={{ marginBottom: '20px' }}>
+                                                    <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600', color: '#1a1a1a', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Tus Datos</label>
+                                                    <input 
+                                                        type="text" 
+                                                        placeholder="Nombre" 
+                                                        value={customerInfo.name}
+                                                        onChange={(e) => setCustomerInfo({...customerInfo, name: e.target.value})}
+                                                        className="customer-input"
+                                                    />
+                                                    <input 
+                                                        type="email" 
+                                                        placeholder="Email" 
+                                                        value={customerInfo.email}
+                                                        onChange={(e) => setCustomerInfo({...customerInfo, email: e.target.value})}
+                                                        className="customer-input"
+                                                    />
+                                                    <input 
+                                                        type="tel" 
+                                                        placeholder="Teléfono" 
+                                                        value={customerInfo.phone}
+                                                        onChange={(e) => setCustomerInfo({...customerInfo, phone: e.target.value})}
+                                                        className="customer-input"
+                                                    />
+                                                </div>
+
+                                                <div style={{ marginBottom: '20px' }}>
+                                                    <label style={{ display: 'block', marginBottom: '10px', fontWeight: '600', color: '#1a1a1a', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Método de Pago</label>
+                                                    <div className="payment-methods">
+                                                        {paymentMethods.map(method => (
+                                                            <div
+                                                                key={method.id}
+                                                                className={`payment-option ${selectedPayment === method.id ? 'selected' : ''}`}
+                                                                onClick={() => {
+                                                                    setSelectedPayment(method.id);
+                                                                    setShowPaymentDetails(false);
+                                                                }}
+                                                            >
+                                                                <h4>{method.name}</h4>
+                                                                <p>{method.desc}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+
+                                                {showPaymentDetails && selectedPayment && (
+                                                    <div className="payment-details">
+                                                        {selectedCountry === 'venezuela' && selectedPayment === 'usdt' && (
+                                                            <>
+                                                                <strong>Envía USDT a:</strong>
+                                                                <div className="wallet-address">0x1234567890abcdef1234567890abcdef12345678</div>
+                                                            </>
+                                                        )}
+                                                        {selectedPayment === 'manual' && (
+                                                            <p>Te contactaremos por WhatsApp para confirmar el pago.</p>
+                                                        )}
+                                                    </div>
+                                                )}
+
+                                                {selectedPayment === 'manual' ? (
+                                                    <button className="contact-btn" onClick={() => sendWhatsAppNotification()}>
+                                                        💬 Contactar por WhatsApp
+                                                    </button>
+                                                ) : (
+                                                    <button className="checkout-btn" onClick={handleCheckout}>
+                                                        Completar Compra
+                                                    </button>
+                                                )}
+                                            </>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    <footer>
+                        <p>© 2026 <span className="footer-highlight">AQUAVID</span> | Tu Libertad en Botella</p>
+                        <p>Contacto: hola@aquavid.com | <span className="footer-highlight">WhatsApp</span></p>
+                    </footer>
+                </>
+            );
+        };
+
+        ReactDOM.render(<AquavidApp />, document.getElementById('app'));
+    </script>
+</body>
+</html>
